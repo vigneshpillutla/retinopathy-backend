@@ -1,11 +1,14 @@
 from flask import Flask,request
+from flask_cors import CORS
 import random
+import secrets
 
 app = Flask(__name__)
+CORS(app)
 
 def getSeverity(imageURL) :
   results = ['No DR','Mild','Moderate','Severe','Proliferative DR']
-  return random.choice(results)
+  return secrets.choice(results)
 
 @app.errorhandler(404)
 def invalidRoute(e):
