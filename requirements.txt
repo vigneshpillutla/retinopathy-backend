@@ -1,7 +1,6 @@
-albumentations==0.4.6
-efficientnet_pytorch==0.7.1
-Flask==1.1.2
-flask_cors==3.0.10
-numpy==1.18.5
-Pillow==9.1.0
-torch==1.11.0
+albumentations
+efficientnet_pytorch
+Flask
+flask_cors
+numpy
+Pillow
