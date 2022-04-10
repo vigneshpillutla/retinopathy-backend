@@ -1,9 +1,7 @@
 from flask import Flask,request
 from flask_cors import CORS
-import random
-import secrets
 from albumentations.pytorch import ToTensorV2
-import albumentations as A
+from albumentations import Compose,Resize
 import numpy as np
 import torch
 import urllib
@@ -16,19 +14,19 @@ app = Flask(__name__)
 CORS(app)
 
 # Transformations for Images
-VAL_Transforms = A.Compose(
+VAL_Transforms = Compose(
   [
-    A.Resize(width=256, height=256),
+    Resize(width=256, height=256),
     ToTensorV2()
   ]
 )
 # Labels for Result
 Label_Dict = {
-  "0": "No Diabetic Retinopathy Detected",
-  "1": "Mild Diabetic Retinopathy Detected",
-  "2": "Moderate Diabetic Retinopathy Detected",
-  "3": "Severe Diabetic Retinopathy Detected",
-  "4": "Proliferate Diabetic Retinopathy Detected",
+  "0": "No Diabetic Retinopathy",
+  "1": "Mild Diabetic Retinopathy",
+  "2": "Moderate Diabetic Retinopathy",
+  "3": "Severe Diabetic Retinopathy",
+  "4": "Proliferate Diabetic Retinopathy",
 }
 
 # Making Model Instance
