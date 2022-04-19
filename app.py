@@ -80,4 +80,6 @@ def severity():
     'severity':severity
   }
 
-# severity()
+@app.route('/labels')
+def getLabels():
+  return Label_Dict;
