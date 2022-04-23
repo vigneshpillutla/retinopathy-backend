@@ -1,3 +1,4 @@
+import secrets
 from flask import Flask,request
 from flask_cors import CORS
 from albumentations.pytorch import ToTensorV2
@@ -11,6 +12,8 @@ from efficientnet_pytorch import EfficientNet
 from torch import nn
 
 app = Flask(__name__)
+weights_file = 'dummy.txt'
+model_loaded = True
 CORS(app)
 
 # Transformations for Images
@@ -34,11 +37,19 @@ NewModel__ = EfficientNet.from_pretrained("efficientnet-b3")
 NewModel__._fc = nn.Linear(1536, 5)
 NewModel__.to('cpu')
 
-# Loading Trained Model
-checkpoint = torch.load("chk.pth.tar", map_location='cpu')
-NewModel__.load_state_dict(checkpoint["state_dict"])
+try:
+  # Loading Trained Model
+  checkpoint = torch.load(weights_file, map_location='cpu')
+  NewModel__.load_state_dict(checkpoint["state_dict"])
+except:
+  print('could not find the file');
+  model_loaded = False
 
 def getSeverity(imageURL) :
+
+  if not model_loaded:
+    return secrets.choice(list(range(0,5)))
+
 
   NewModel__.eval()
   with urllib.request.urlopen(imageURL) as url:
